@@ -9,6 +9,21 @@
   gtag('js', new Date());
 
   gtag('config', 'G-DV45WMRW00');
+
+  // When tab is inactive
+  addEventListener('blur', function() {
+    titleInterval = setInterval(() => {
+      document.title = '😢 Come back';
+    }, 2000);
+  });
+  // When tab is active
+  addEventListener('focus', function() {
+    if (titleInterval) {
+      clearInterval(titleInterval);
+      document.title = originalTitle;
+    }
+  });
+  
 </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
