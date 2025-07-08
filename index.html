@@ -357,6 +357,12 @@
     </style>
 </head>
 <body>
+    <script>
+        // Append to the <body>; can use a CSS selector to append somewhere else.
+        window.goatcounter.visit_count({append: 'body'})
+    </script>
+    <script data-goatcounter="https://polymath.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
     <div class="split-screen-container">
         
         <div class="intro-pane">
@@ -694,11 +700,16 @@
             document.getElementById('progressFill').style.width = '0%';
         }
     </script>
-     <!--<center><div class="social-proof">
-        <p>🌟 Join 1,247 people who've discovered their intellectual style!</p>
-        <small>Last updated: January 2025</small>
-      </div></center>-->
-      <script data-goatcounter="https://polymath.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+    <script>
+        var t = setInterval(function() {
+            if (window.goatcounter && window.goatcounter.visit_count) {
+                clearInterval(t)
+                window.goatcounter.visit_count({append: 'body'})
+            }
+        }, 100)
+    </script>
+    <script data-goatcounter="https://polymath.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
+    
 </body>
 </html>
