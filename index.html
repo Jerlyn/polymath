@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="The Polymath Quiz - Discover Your Renaissance Mind">
+    <meta property="og:description" content="Find out if you're a modern Leonardo da Vinci! Take this quiz to discover your intellectual style.">
+    <meta property="og:image" content="https://jerlyn.github.io/polymath/polymath.png">
+    <meta name="twitter:card" content="summary_large_image">
     <title>The Polymath Quiz - Discover Your Renaissance Mind</title>
     <style>
         * {
@@ -348,8 +352,8 @@
         
         <div class="intro-pane">
             <div class="intro-content">
-                <h1>The Polymath Quiz</h1>
-                <p>Discover your unique intellectual style in a world of specialists.</p>
+                <center><h1>The Polymath Quiz</h1>
+                <p>Discover your unique intellectual style in a world of specialists.</p></center>
             </div>
         </div>
 
@@ -495,7 +499,14 @@
                 polymathDescription: "Like Leonardo da Vinci, you are driven by an insatiable curiosity that spans art, science, engineering, and more. Your strength isn't just knowing things; it's about synthesizing them into groundbreaking new ideas.",
                 polymathImage: "leo.png"
             },
-            medium: { // 19-24 points
+            gates: { // 22-24 points
+                title: "The Systematic Polymath",
+                description: "You approach learning with methodical precision, deliberately building expertise across multiple domains. Unlike intuitive polymaths, you systematically acquire knowledge and apply rigorous thinking to connect different fields. Your strength lies in strategic cross-domain mastery.",
+                polymath: "Bill Gates",
+                polymathDescription: "Like Bill Gates, you don't just stumble upon connections—you methodically build them. From technology to global health to climate science, you approach each new field with systematic study and apply that knowledge strategically to solve complex problems.",
+                polymathImage: "gates.png"
+            },
+            medium: { // 19-21 points
                 title: "The Adaptable Integrator",
                 description: "You possess strong polymathic tendencies and a highly adaptable mind. You thrive by bridging different worlds, translating ideas between specialists, and bringing a holistic view to complex projects. You are a vital connector and innovator.",
                 polymath: "Benjamin Franklin",
@@ -583,6 +594,7 @@
 
         let userResult;
         if (score >= 25) userResult = resultTiers.high;
+        else if (score >= 22) userResult = resultTiers.gates;
         else if (score >= 19) userResult = resultTiers.medium;
         else if (score >= 14) userResult = resultTiers.low;
         else userResult = resultTiers.verylow;
@@ -632,6 +644,7 @@
         function shareResult(platform) {
             let result;
             if (score >= 25) result = resultTiers.high;
+            else if (score >= 22) result = resultTiers.gates;
             else if (score >= 19) result = resultTiers.medium;
             else if (score >= 14) result = resultTiers.low;
             else result = resultTiers.verylow;
