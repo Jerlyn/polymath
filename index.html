@@ -10,23 +10,59 @@
 
   gtag('config', 'G-DV45WMRW00');
 
-  // Store original title for tab switching
-  const originalTitle = 'The Polymath Quiz - Discover Your Renaissance Mind';
-  let titleInterval;
+ // Store original title for tab switching
+const originalTitle = 'The Polymath Quiz - Discover Your Renaissance Mind';
 
-  // When tab is inactive
-  addEventListener('blur', function() {
-    titleInterval = setInterval(() => {
-      document.title = '😢 Come back and finish your quiz!';
-    }, 2000);
-  });
-  // When tab is active
-  addEventListener('focus', function() {
-    if (titleInterval) {
-      clearInterval(titleInterval);
-      document.title = originalTitle;
+// Marquee message with padding for smooth scrolling
+const marqueeMessage = '😢 Come back and finish your quiz! Don\'t let your curiosity fade away... ';
+const paddedMessage = marqueeMessage + ' '.repeat(10) + marqueeMessage;
+
+let titleInterval;
+let marqueePosition = 0;
+
+function updateMarqueeTitle() {
+    // Create a sliding window of text (adjust length as needed)
+    const windowSize = 50; // Adjust this for title bar width
+    const displayText = paddedMessage.substring(marqueePosition, marqueePosition + windowSize);
+    
+    document.title = displayText;
+    
+    // Move position forward, reset when reaching end
+    marqueePosition++;
+    if (marqueePosition >= marqueeMessage.length) {
+        marqueePosition = 0;
     }
-  });
+}
+
+// When tab becomes inactive
+addEventListener('blur', function() {
+    marqueePosition = 0; // Reset position
+    titleInterval = setInterval(updateMarqueeTitle, 100); // Adjust speed (200ms = smooth)
+});
+
+// When tab becomes active
+addEventListener('focus', function() {
+    if (titleInterval) {
+        clearInterval(titleInterval);
+        document.title = originalTitle;
+        marqueePosition = 0; // Reset for next time
+    }
+});
+
+// Optional: Pause animation when page is hidden (accessibility consideration)
+document.addEventListener('visibilitychange', function() {
+    if (document.hidden && !titleInterval) {
+        // Tab is hidden but blur event might not have fired
+        marqueePosition = 0;
+        titleInterval = setInterval(updateMarqueeTitle, 200);
+    } else if (!document.hidden && titleInterval) {
+        // Tab is visible again
+        clearInterval(titleInterval);
+        titleInterval = null;
+        document.title = originalTitle;
+        marqueePosition = 0;
+    }
+});
   
 </script>
     <meta charset="UTF-8">
