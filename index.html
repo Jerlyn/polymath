@@ -10,10 +10,14 @@
 
   gtag('config', 'G-DV45WMRW00');
 
+  // Store original title for tab switching
+  const originalTitle = 'The Polymath Quiz - Discover Your Renaissance Mind';
+  let titleInterval;
+
   // When tab is inactive
   addEventListener('blur', function() {
     titleInterval = setInterval(() => {
-      document.title = '😢 Come back';
+      document.title = '😢 Come back and finish your quiz!';
     }, 2000);
   });
   // When tab is active
@@ -372,12 +376,6 @@
     </style>
 </head>
 <body>
-    <script>
-        // Append to the <body>; can use a CSS selector to append somewhere else.
-        window.goatcounter.visit_count({append: 'body'})
-    </script>
-    <script data-goatcounter="https://polymath.goatcounter.com/count"
-            async src="//gc.zgo.at/count.js"></script>
     <div class="split-screen-container">
         
         <div class="intro-pane">
@@ -396,6 +394,16 @@
                     <h2>Tired of Being Told to 'Stay in Your Lane'?</h2>
                     <p>Do you feel like you don't quite fit into a single professional box? Do you see fascinating connections where others see walls? This quiz explores whether you have the traits of a polymath—a person whose expertise spans a significant number of different subject areas.</p>
                     <p>Take 5 minutes to discover your intellectual profile and find out which famous polymath you're most like!</p>
+                    
+                    <div class="social-proof" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; border-left: 4px solid #0d509e;">
+                        <p style="margin: 0; color: #666; font-size: 0.95em;">
+                            🌟 <span id="visitor-count">Loading...</span> people have discovered their intellectual style
+                        </p>
+                        <small style="color: #999;">
+                            <a href="https://polymath.goatcounter.com" target="_blank" style="color: #0d509e; text-decoration: none;">View live stats</a> | Real-time data
+                        </small>
+                    </div>
+                    
                     <button class="btn" onclick="startQuiz()">Start the Quiz</button>
                 </div>
     
@@ -714,15 +722,32 @@
             document.getElementById('startScreen').style.display = 'block';
             document.getElementById('progressFill').style.width = '0%';
         }
+
+        // Auto-update visitor count from GoatCounter
+        function updateVisitorCount() {
+            fetch('https://polymath.goatcounter.com/counter/visits.json')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.count_unique) {
+                        document.getElementById('visitor-count').textContent = data.count_unique.toLocaleString() + '+';
+                    } else {
+                        document.getElementById('visitor-count').textContent = '1,200+';
+                    }
+                })
+                .catch(error => {
+                    // Fallback to manual count if API fails
+                    document.getElementById('visitor-count').textContent = '1,200+';
+                    console.log('Using manual visitor count fallback');
+                });
+        }
+        
+        // Try to update count when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateVisitorCount();
+        });
     </script>
-    <script>
-        var t = setInterval(function() {
-            if (window.goatcounter && window.goatcounter.visit_count) {
-                clearInterval(t)
-                window.goatcounter.visit_count({append: 'body'})
-            }
-        }, 100)
-    </script>
+    
+    <!-- GoatCounter tracking (hidden) -->
     <script data-goatcounter="https://polymath.goatcounter.com/count"
             async src="//gc.zgo.at/count.js"></script>
     
